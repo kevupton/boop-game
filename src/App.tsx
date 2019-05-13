@@ -4,50 +4,55 @@ import { flatMap, tap } from 'rxjs/operators';
 import './App.css';
 import logo from './logo.svg';
 
-const w = (window as any as {
-  party : PeerParty;
-  identity : PeerIdentity;
-  setIdentity : any;
-  setIdentity2 : any;
-});
-
 const config : RTCConfiguration = {
-  'iceServers': [
-    {'urls': 'stun:stun.stunprotocol.org:3478'},
-    {'urls': 'stun:stun.l.google.com:19302'},
-  ]
+  // 'iceServers': [
+  //   {'urls': 'stun:stun.stunprotocol.org:3478'},
+  //   {'urls': 'stun:stun.l.google.com:19302'},
+  // ]
 };
 
-const party  = w.party = new PeerParty(config);
-const party2 = new PeerParty(config);
+const party  = new PeerParty(config);
+const parties : { [key : string] : PeerParty } = {
+  [party.uuid]: party,
+};
 
+const uuidToPartyUuid : { [key : string] : string } = {
+};
 
 party.onIceCandidate$.subscribe(({ uuid, candidate }) => {
-  party2.iceCandidateReceived(uuid, candidate).subscribe();
+  parties[uuidToPartyUuid[uuid]].iceCandidateReceived(uuid, candidate).subscribe();
 });
 
-party2.onIceCandidate$.subscribe(({ uuid, candidate }) => {
-  party.iceCandidateReceived(uuid, candidate).subscribe();
-});
+for (let i = 0; i < 10; i++) {
+  const otherParty = new PeerParty(config);
 
-party.createIdentity().pipe(
-  tap(identity => console.log(identity)),
-  flatMap(identity => {
-    return party2.identityReceived(identity).pipe(
-      flatMap(resultIdentity => {
-        return party.identityReceived(resultIdentity, identity.uuid);
-      }),
-    );
-  }),
-)
-  .subscribe();
+  otherParty.message$.subscribe(message => {
+    console.log(otherParty.uuid + ': ' + message);
+  });
 
-party2.message$.subscribe(message => {
-  console.log('Message Received: ', message);
-});
+  parties[otherParty.uuid] = otherParty;
+  otherParty.onIceCandidate$.subscribe(({ uuid, candidate }) => {
+    party.iceCandidateReceived(uuid, candidate).subscribe();
+  });
 
+  party.createIdentity().pipe(
+    tap(identity => uuidToPartyUuid[identity.uuid] = party.uuid),
+    flatMap(identity => {
+      return otherParty.identityReceived(identity).pipe(
+        flatMap(resultIdentity => {
+          uuidToPartyUuid[resultIdentity.uuid] = otherParty.uuid;
+          return party.identityReceived(resultIdentity, identity.uuid);
+        }),
+      );
+    }),
+  )
+    .subscribe();
+}
+
+let i = 0;
 setInterval(() => {
-  party.send('test');
+  i++;
+  party.send('test ' + i);
 }, 500);
 
 const App : React.FC = () => {
