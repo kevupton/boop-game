@@ -1,4 +1,4 @@
-import { PeerIdentity, PeerParty } from 'game-engine';
+import { PeerParty } from '@kevupton/game-engine';
 import React from 'react';
 import { flatMap, tap } from 'rxjs/operators';
 import './App.css';
@@ -53,7 +53,7 @@ let i = 0;
 setInterval(() => {
   i++;
   party.send('test ' + i);
-}, 500);
+}, 1000);
 
 const App : React.FC = () => {
   return (

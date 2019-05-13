@@ -1250,6 +1250,13 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
+"@kevupton/game-engine@^0.0.1-beta.2":
+  version "0.0.1-beta.2"
+  resolved "https://registry.yarnpkg.com/@kevupton/game-engine/-/game-engine-0.0.1-beta.2.tgz#11bbafe9d59edbbabe522ed3062e663df7a80176"
+  integrity sha512-fmzEvI6IanPQrGqzunJjsSScGJ7+BZCpX+EboBYHHYzTPlRmc5qS9mjR9VQ+wVM3LZTh3/GaVwP8FP+ZgUDlYw==
+  dependencies:
+    uuid "^3.3.2"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -4473,11 +4480,6 @@ functional-red-black-tree@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
-
-game-engine@*:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/game-engine/-/game-engine-0.0.0.tgz#2fceaca0e26f0e0ffe9a4c35979eb627bee21033"
-  integrity sha1-L86soOJvDg/+mkw1l562J77iEDM=
 
 gauge@~2.7.3:
   version "2.7.4"
