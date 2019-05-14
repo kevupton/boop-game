@@ -1,5 +1,6 @@
 import { PeerParty } from '@kevupton/game-engine';
 import React from 'react';
+import { of } from 'rxjs';
 import { flatMap, tap } from 'rxjs/operators';
 import './App.css';
 import logo from './logo.svg';
@@ -20,7 +21,7 @@ const uuidToPartyUuid : { [key : string] : string } = {
 };
 
 party.onIceCandidate$.subscribe(({ uuid, candidate }) => {
-  parties[uuidToPartyUuid[uuid]].iceCandidateReceived(uuid, candidate).subscribe();
+  parties[uuidToPartyUuid[uuid]].iceCandidateReceived(uuid, candidate.toJSON()).subscribe();
 });
 
 for (let i = 0; i < 10; i++) {
@@ -32,7 +33,7 @@ for (let i = 0; i < 10; i++) {
 
   parties[otherParty.uuid] = otherParty;
   otherParty.onIceCandidate$.subscribe(({ uuid, candidate }) => {
-    party.iceCandidateReceived(uuid, candidate).subscribe();
+    party.iceCandidateReceived(uuid, candidate.toJSON()).subscribe();
   });
 
   party.createIdentity().pipe(
@@ -40,8 +41,14 @@ for (let i = 0; i < 10; i++) {
     flatMap(identity => {
       return otherParty.identityReceived(identity).pipe(
         flatMap(resultIdentity => {
+          if (!resultIdentity) {
+            return of(null);
+          }
           uuidToPartyUuid[resultIdentity.uuid] = otherParty.uuid;
-          return party.identityReceived(resultIdentity, identity.uuid);
+          return party.identityReceived({
+            uuid: identity.uuid,
+            description: resultIdentity.description,
+          });
         }),
       );
     }),
