@@ -1,7 +1,5 @@
-import { PeerParty } from '@kevupton/game-engine';
+import { SocketParty } from '@kevupton/game-engine';
 import React from 'react';
-import { of } from 'rxjs';
-import { flatMap, tap } from 'rxjs/operators';
 import './App.css';
 import logo from './logo.svg';
 
@@ -12,55 +10,13 @@ const config : RTCConfiguration = {
   // ]
 };
 
-const party  = new PeerParty(config);
-const parties : { [key : string] : PeerParty } = {
-  [party.uuid]: party,
-};
+const party = new SocketParty(config);
 
-const uuidToPartyUuid : { [key : string] : string } = {
-};
-
-party.onIceCandidate$.subscribe(({ uuid, candidate }) => {
-  parties[uuidToPartyUuid[uuid]].iceCandidateReceived(uuid, candidate.toJSON()).subscribe();
+party.message$.subscribe(message => {
+  console.log(message);
 });
 
-for (let i = 0; i < 10; i++) {
-  const otherParty = new PeerParty(config);
-
-  otherParty.message$.subscribe(message => {
-    console.log(otherParty.uuid + ': ' + message);
-  });
-
-  parties[otherParty.uuid] = otherParty;
-  otherParty.onIceCandidate$.subscribe(({ uuid, candidate }) => {
-    party.iceCandidateReceived(uuid, candidate.toJSON()).subscribe();
-  });
-
-  party.createIdentity().pipe(
-    tap(identity => uuidToPartyUuid[identity.uuid] = party.uuid),
-    flatMap(identity => {
-      return otherParty.identityReceived(identity).pipe(
-        flatMap(resultIdentity => {
-          if (!resultIdentity) {
-            return of(null);
-          }
-          uuidToPartyUuid[resultIdentity.uuid] = otherParty.uuid;
-          return party.identityReceived({
-            uuid: identity.uuid,
-            description: resultIdentity.description,
-          });
-        }),
-      );
-    }),
-  )
-    .subscribe();
-}
-
 let i = 0;
-setInterval(() => {
-  i++;
-  party.send('test ' + i);
-}, 1000);
 
 const App : React.FC = () => {
   return (
@@ -70,14 +26,13 @@ const App : React.FC = () => {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <button onClick={ () => {
+          setInterval(() => {
+            i++;
+            party.send('test ' + i);
+          }, 1000);
+        } }>Start Sending Data
+        </button>
       </header>
     </div>
   );
