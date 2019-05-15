@@ -1,7 +1,8 @@
-import { SocketParty } from '@kevupton/game-engine';
 import React from 'react';
 import './App.css';
+import { events } from './game';
 import logo from './logo.svg';
+import './game';
 
 const config : RTCConfiguration = {
   // 'iceServers': [
@@ -9,12 +10,6 @@ const config : RTCConfiguration = {
   //   {'urls': 'stun:stun.l.google.com:19302'},
   // ]
 };
-
-const party = new SocketParty(config);
-
-party.message$.subscribe(message => {
-  console.log(message);
-});
 
 let i = 0;
 
@@ -26,12 +21,7 @@ const App : React.FC = () => {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <button onClick={ () => {
-          setInterval(() => {
-            i++;
-            party.send('test ' + i);
-          }, 1000);
-        } }>Start Sending Data
+        <button onClick={() => events.triggerLocalEvent('multiply').subscribe()}>Start Sending Data
         </button>
       </header>
     </div>
