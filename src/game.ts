@@ -1,4 +1,5 @@
-import { GameState, SocketParty, GameEventManager, GameEvent } from '@kevupton/game-engine';
+import { GameState, SocketParty, GameEventManager, GameEvent, GameStateModification, ModificationMap } from '@kevupton/game-engine';
+import { not } from 'rxjs/internal-compatibility';
 
 export interface GameData {
   count : number;
@@ -23,9 +24,13 @@ gameState.state$.subscribe(state => {
 
 const Multiply : GameEvent<GameData> = {
   name: 'multiply',
-  calculateModifications (state) {
+  calculateModifications (state) : ModificationMap<GameData>  {
     console.log('cur state: ', state);
-    return { count: [['+', '0.1'], ['*', 2]] };
+    const tooHigh : ModificationMap<GameData> = { count: ['=', 1] };
+    const notHighEnough : ModificationMap<GameData> = { count: [['+', '0.1'], ['*', 2]] };
+    const modification = state.count > 1000000 ?  tooHigh : notHighEnough;
+    console.log('modification', modification);
+    return modification;
   },
 };
 
