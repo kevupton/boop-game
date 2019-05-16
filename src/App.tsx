@@ -1,11 +1,15 @@
 import React from 'react';
 import { ReactiveXComponent } from 'reactive-x-component';
 import './App.css';
-import { gameState } from './game';
+import gameEngine  from './game';
+
+gameEngine.start();
 
 export default ReactiveXComponent({
-  state: gameState.state$,
-}, { state: gameState.state })(({ state }) => {
+  state: gameEngine.state$,
+}, {
+  state: gameEngine.state
+})(({ state }) => {
   const players = Object.keys(state.players);
 
   return (
