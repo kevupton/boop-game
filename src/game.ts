@@ -1,36 +1,58 @@
-import { GameEvent, GameEventManager, GameState, ModificationMap, SocketParty } from '@kevupton/game-engine';
+import { GameControllerClass, GameEventManager, GameState, SocketParty, GameEvent } from '@kevupton/game-engine';
+import { MouseController } from './controllers/MouseController';
+import { MousePositionEvent } from './events/MousePositionEvent';
 
 export interface GameData {
-  count : number;
+  canvasWidth : number;
+  canvasHeight : number;
+  player1PosX : number;
+  player1PosY : number;
 }
 
 export const gameState = new GameState<GameData>({
-  count: 1,
+  canvasWidth: 500,
+  canvasHeight: 500,
+  player1PosX: 250,
+  player1PosY: 250,
 });
 
-export const party = new SocketParty<any>({ rtcConfig: {} });
+export const party  = new SocketParty<any>({ rtcConfig: {} });
+export const gameEventManager = new GameEventManager(gameState, party);
 
-// party.message$.subscribe(message => {
-//   console.log(message);
-// });
+const controllerTypes : GameControllerClass[] = [
+  MouseController,
+];
+const events : GameEvent[] = [
+  MousePositionEvent,
+];
 
-export const events = new GameEventManager(gameState, party);
-let prevTime : number = Date.now();
-gameState.state$.subscribe(state => {
-  console.log('new state: ', state, Date.now() - prevTime);
-});
+events.forEach(event => gameEventManager.registerEvent(event));
 
-const Multiply : GameEvent<GameData> = {
-  name: 'multiply',
-  calculateModifications (state) : ModificationMap<GameData> {
-    console.log('cur state: ', state);
-    prevTime = Date.now();
-    const tooHigh : ModificationMap<GameData>       = { count: ['=', 1] };
-    const notHighEnough : ModificationMap<GameData> = { count: [['+', 0.1], ['*', 2]] };
-    const modification                              = state.count > 1000000 ? tooHigh : notHighEnough;
-    console.log('modification', modification);
-    return modification;
-  },
+const controllers = controllerTypes.map(Controller => new Controller(gameState, gameEventManager));
+
+controllers.forEach(controller => controller.init());
+
+const framesPerSecond = 30;
+const interval = 1000 / framesPerSecond;
+
+let prevTime = Date.now();
+let delta = 0;
+
+const loop = () => {
+  requestAnimationFrame(loop);
+
+  const now = Date.now();
+  const diff = now - prevTime;
+  prevTime = now;
+
+  delta += diff;
+
+  if (delta < interval) {
+    return;
+  }
+
+  controllers.forEach(controller => controller.loop(delta));
+  delta = 0;
 };
 
-events.registerEvent(Multiply);
+loop();

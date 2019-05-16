@@ -1,31 +1,26 @@
 import React from 'react';
 import './App.css';
-import { events } from './game';
-import logo from './logo.svg';
-import './game';
+import { ReactiveXComponent } from 'reactive-x-component';
+import {gameState } from './game';
 
-const config : RTCConfiguration = {
-  // 'iceServers': [
-  //   {'urls': 'stun:stun.stunprotocol.org:3478'},
-  //   {'urls': 'stun:stun.l.google.com:19302'},
-  // ]
-};
 
-let i = 0;
 
-const App : React.FC = () => {
+export default ReactiveXComponent({
+  state: gameState.state$,
+}, { state: gameState.state })(({ state }) => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo"/>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <button onClick={() => events.triggerLocalEvent('multiply').subscribe()}>Start Sending Data
-        </button>
-      </header>
+      <div style={ {
+        borderRadius: '50%',
+        backgroundColor: 'red',
+        position: 'absolute',
+        width: 20,
+        height: 20,
+        top: state.player1PosY,
+        left: state.player1PosX,
+        transform: 'translate(-50%, -50%)',
+        transition: '200ms',
+      } }/>
     </div>
   );
-};
-
-export default App;
+});
