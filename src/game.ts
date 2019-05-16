@@ -17,6 +17,9 @@ export interface GameData {
 }
 
 export default new GameEngine<GameData>({
+  socketConfig: {
+    host: 'ec2-13-236-85-45.ap-southeast-2.compute.amazonaws.com',
+  },
   initialState: {
     canvasWidth: 500,
     canvasHeight: 500,
