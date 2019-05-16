@@ -6,8 +6,8 @@ const INTERVAL = 100;
 
 export class MouseController extends GameController<GameData> {
 
-  private currentX = 0;
-  private currentY = 0;
+  private currentX? : number;
+  private currentY? : number;
 
   private countdown = 0;
 
@@ -25,9 +25,14 @@ export class MouseController extends GameController<GameData> {
       return;
     }
 
+    if (this.currentY === undefined || this.currentX === undefined) {
+      return;
+    }
+
     this.eventManager.triggerLocalEvent(MousePositionEvent.name, {
       posX: this.currentX,
       posY: this.currentY,
+      uuid: this.party.uuid,
     }).subscribe();
 
     this.countdown += INTERVAL;
