@@ -1250,11 +1250,13 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@kevupton/game-engine@^0.0.1-beta.11":
-  version "0.0.1-beta.11"
-  resolved "https://registry.yarnpkg.com/@kevupton/game-engine/-/game-engine-0.0.1-beta.11.tgz#db043f070473f271fcd685d2f30304fe585dc70e"
-  integrity sha512-Aiu8XJ3Hf42eTLu63iP/5ldu+q0d2S3MpeGOF87GkGGCidSCCR3+5lIk0T1IdggSuLX36ZMMI1UQolne1tcjbg==
+"@kevupton/game-engine@^0.0.1-beta.12":
+  version "0.0.1-beta.12"
+  resolved "https://registry.yarnpkg.com/@kevupton/game-engine/-/game-engine-0.0.1-beta.12.tgz#4ca392896d1d17305c179ef470e23a3def59a564"
+  integrity sha512-KP8cnmKPoY+nSUz5VewELiFYKjpeTBxh8ZdE7/Nofi7huguXztCq1iVRF0DYhkU7Skwfyx3nyD4+yuInA8amEw==
   dependencies:
+    "@types/lodash" "^4.14.129"
+    lodash "^4.17.11"
     uuid "^3.3.2"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
@@ -1492,6 +1494,11 @@
   integrity sha512-60sjqMhat7i7XntZckcSGV8iREJyXXI6yFHZkSZvCPUeOnEJ/VP1rU/WpEWQ56mvoh8NhC+sfKAuJRTyGtCOow==
   dependencies:
     "@types/jest-diff" "*"
+
+"@types/lodash@^4.14.129":
+  version "4.14.129"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.129.tgz#9aaca391db126802482655c48dd79a814488202f"
+  integrity sha512-oYaV0eSlnOacOr7i4X1FFdH8ttSlb57gu3I9MuStIv2CYkISEY84dNHYsC3bF6sNH7qYcu1BtVrCtQ8Q4KPTfQ==
 
 "@types/long@^4.0.0":
   version "4.0.0"

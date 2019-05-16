@@ -17,3 +17,5 @@ export const PlayerInitEvent : GameEvent<GameData, PlayerData> = {
     };
   },
 };
+
+// TODO create a player leave event
