@@ -1250,10 +1250,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@kevupton/game-engine@^0.0.1-beta.13":
-  version "0.0.1-beta.13"
-  resolved "https://registry.yarnpkg.com/@kevupton/game-engine/-/game-engine-0.0.1-beta.13.tgz#e7876aa7186119721c370181825412db4ff23322"
-  integrity sha512-Vds/bNCp7k/J+yeuXeJOYMlQxRMgKkwu67zg+pOHWUgPGxxeTKeoFkkFdLYhqsLFtKSSVFu2SQyAt18i8tefKg==
+"@kevupton/game-engine@^0.0.1-beta.14":
+  version "0.0.1-beta.14"
+  resolved "https://registry.yarnpkg.com/@kevupton/game-engine/-/game-engine-0.0.1-beta.14.tgz#3fb9dc6beba9b9f56b38c60353fd30a309ee1a17"
+  integrity sha512-zppClBLtFoZV5GEYJJ16ruAU8XeSfPfXA3zuOKwv3DmmvlCFVVPfxDZs2TGDsOVUzqg52n1dJjdiUqFy6UajGw==
   dependencies:
     "@types/lodash" "^4.14.129"
     lodash "^4.17.11"
