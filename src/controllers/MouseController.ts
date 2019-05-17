@@ -29,12 +29,12 @@ export class MouseController extends GameController<GameData> {
       return;
     }
 
-    this.eventManager.triggerLocalEvent(MousePositionEvent.name, {
+    this.eventManager.triggerLocalEvent(new MousePositionEvent({
       posX: this.currentX,
       posY: this.currentY,
       uuid: this.party.uuid,
-    }).subscribe();
+    })).subscribe();
 
-    this.countdown += INTERVAL;
+    this.countdown = INTERVAL;
   }
 }
