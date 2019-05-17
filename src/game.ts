@@ -19,6 +19,12 @@ export interface GameData {
 export default new GameEngine<GameData>({
   socketConfig: {
     host: 'ec2-13-236-85-45.ap-southeast-2.compute.amazonaws.com',
+    rtcConfig: {
+      'iceServers': [
+        {'urls': 'stun:stun.stunprotocol.org:3478'},
+        {'urls': 'stun:stun.l.google.com:19302'},
+      ]
+    }
   },
   initialState: {
     canvasWidth: 500,
@@ -33,14 +39,6 @@ export default new GameEngine<GameData>({
     MousePositionEvent,
     PlayerInitEvent,
   ],
-  socketConfig: {
-    rtcConfig: {
-      'iceServers': [
-        {'urls': 'stun:stun.stunprotocol.org:3478'},
-        {'urls': 'stun:stun.l.google.com:19302'},
-      ]
-    }
-  }
 });
 
 
