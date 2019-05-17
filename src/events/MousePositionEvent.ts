@@ -7,7 +7,7 @@ interface MouseData {
   uuid : string;
 }
 
-const SPEED = 20;
+const SPEED = 60;
 
 export class MousePositionEvent extends GameEvent<GameData, MouseData> {
   protected calculateModifications (

@@ -2,7 +2,7 @@ import { MousePositionEvent } from '../events/MousePositionEvent';
 import { GameData } from '../game';
 import { GameController } from '@kevupton/game-engine';
 
-const INTERVAL = 100;
+const INTERVAL = 300;
 
 export class MouseController extends GameController<GameData> {
 
