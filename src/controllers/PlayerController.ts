@@ -6,10 +6,10 @@ import randomColor from 'randomcolor';
 export class PlayerController extends GameController<GameData> {
 
   public init () : void {
-    this.eventManager.triggerLocalEvent(PlayerInitEvent.name, {
+    this.eventManager.triggerLocalEvent(new PlayerInitEvent( {
       uuid: this.party.uuid,
       color: randomColor(),
-    }).subscribe();
+    })).subscribe();
   }
 
   public loop (delta : number) : void {

@@ -24,7 +24,7 @@ export default ReactiveXComponent({
           top: state.players[playerId].y,
           left: state.players[playerId].x,
           transform: 'translate(-50%, -50%)',
-          transition: '200ms',
+          transition: '800ms linear',
         } }/>
       )) }
     </div>

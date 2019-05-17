@@ -6,16 +6,13 @@ interface PlayerData {
   color : string;
 }
 
-export const PlayerInitEvent : GameEvent<GameData, PlayerData> = {
-  name: 'player-init-event',
-  calculateModifications (
-    state,
-    { uuid, color },
+export class PlayerInitEvent extends GameEvent<GameData, PlayerData> {
+  protected calculateModifications (
+    state : GameData,
+    { uuid, color } : PlayerData,
   ) : ModificationMap<GameData> {
     return {
       ['players.' + uuid]: ['=', { x: 200, y: 200, color, }],
     };
-  },
-};
-
-// TODO create a player leave event
+  }
+}

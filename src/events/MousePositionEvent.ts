@@ -1,19 +1,18 @@
 import { GameEvent, ModificationMap } from '@kevupton/game-engine';
 import { GameData } from '../game';
 
-interface MousePosition {
+interface MouseData {
   posX : number;
   posY : number;
   uuid : string;
 }
 
-const SPEED = 20;
+const SPEED = 60;
 
-export const MousePositionEvent : GameEvent<GameData, MousePosition> = {
-  name: 'mouse-position-event',
-  calculateModifications (
+export class MousePositionEvent extends GameEvent<GameData, MouseData> {
+  protected calculateModifications (
     { players } : GameData,
-    { posX, posY, uuid },
+    { posX, posY, uuid } : MouseData,
   ) : ModificationMap<GameData> {
     if (!players[uuid]) {
       return {};
@@ -36,5 +35,5 @@ export const MousePositionEvent : GameEvent<GameData, MousePosition> = {
       ['players.' + uuid + '.x']: ['+', percX * SPEED],
       ['players.' + uuid + '.y']: ['+', percY * SPEED],
     };
-  },
-};
+  }
+}
