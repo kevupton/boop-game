@@ -1,4 +1,5 @@
 import { ViewItem } from '@kevupton/game-engine';
+import { MovementController } from '../controllers/MovementController';
 import { GameState, ViewState } from '../game';
 
 export interface PlayerBallParams {
@@ -24,9 +25,44 @@ export class PlayerBall extends ViewItem<GameState, ViewState, PlayerBallParams>
     ctx.fill();
   }
 
-  public update ({ players } : GameState, viewState : ViewState, delta : number) : Partial<ViewState> | undefined {
+  public update (
+    { players } : GameState,
+    { players: vPlayers } : ViewState,
+    delta : number,
+  ) : Partial<ViewState> | void {
+    const player = players[this.params.uuid];
+
+    if (!player || !player.vector) {
+      return;
+    }
+
+    const vPlayer = vPlayers[this.params.uuid] || { percentage: 0, prevPlayerPosition: {} };
+
+    let prevPercentage = 0;
+    if (vPlayer.prevPlayerPosition.x === player.playerPosition.x &&
+      vPlayer.prevPlayerPosition.y === player.playerPosition.y) {
+      prevPercentage = vPlayer.percentage;
+    }
+
+    const percentage = Math.min(1, (delta / (200)) + prevPercentage);
+
+    // console.log(JSON.stringify(vPlayer), JSON.stringify(player));
+    // console.log(vPlayer.prevPlayerPosition.x === player.playerPosition.x &&
+    //   vPlayer.prevPlayerPosition.y === player.playerPosition.y);
+    // console.log(prevPercentage, percentage);
+
     return {
-      players,
+      players: {
+        ...vPlayers,
+        [this.params.uuid]: {
+          ...vPlayer,
+          x: player.playerPosition.x + (percentage * player.vector.x),
+          y: player.playerPosition.y + (percentage * player.vector.y),
+          prevPlayerPosition: { ...player.playerPosition },
+          percentage,
+          color: player.color,
+        },
+      },
     };
   }
 

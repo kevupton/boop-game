@@ -1,7 +1,8 @@
-import { GameEngine } from '@kevupton/game-engine';
-import { MouseController } from './controllers/MouseController';
+import { GameEngine, Vector } from '@kevupton/game-engine';
+import { MovementController } from './controllers/MovementController';
 import { PlayerController } from './controllers/PlayerController';
 import { MousePositionEvent } from './events/MousePositionEvent';
+import { MovementSyncEvent } from './events/MovementSyncEvent';
 import { PlayerInitEvent } from './events/PlayerInitEvent';
 
 export interface GameState {
@@ -9,8 +10,9 @@ export interface GameState {
   canvasHeight : number;
   players : {
     [key : string] : {
-      x : number;
-      y : number;
+      playerPosition : Vector;
+      mousePosition : Vector;
+      vector : Vector;
       color : string;
     }
   }
@@ -21,6 +23,8 @@ export interface ViewState {
     [key : string] : {
       x : number;
       y : number;
+      prevPlayerPosition : Vector;
+      percentage : number;
       color : string;
     }
   }
@@ -30,28 +34,31 @@ export default new GameEngine<GameState, ViewState>({
   initialViewState: {
     players: {},
   },
-  socketConfig: {
-    host: 'p2p.s1r.io',
-    rtcConfig: {
-      'iceServers': [
-        {'urls': 'stun:stun.stunprotocol.org:3478'},
-        {'urls': 'stun:stun.l.google.com:19302'},
-      ]
-    }
-  },
+  ticksPerSecond: 30,
+  framesPerSecond: 60,
   initialState: {
     canvasWidth: 500,
     canvasHeight: 500,
     players: {},
   },
   controllers: [
-    MouseController,
+    MovementController,
     PlayerController,
   ],
   events: [
     MousePositionEvent,
     PlayerInitEvent,
+    MovementSyncEvent,
   ],
+  socketConfig: {
+    host: 'p2p.s1r.io',
+    rtcConfig: {
+      'iceServers': [
+        { 'urls': 'stun:stun.stunprotocol.org:3478' },
+        { 'urls': 'stun:stun.l.google.com:19302' },
+      ],
+    },
+  },
 });
 
 

@@ -1,39 +1,25 @@
-import { GameEvent, ModificationMap } from '@kevupton/game-engine';
+import { GameEvent, ModificationMap, Vector } from '@kevupton/game-engine';
 import { GameState } from '../game';
 
 interface MouseData {
-  posX : number;
-  posY : number;
+  mousePosition : Vector;
   uuid : string;
 }
-
-const SPEED = 60;
 
 export class MousePositionEvent extends GameEvent<GameState, MouseData> {
   protected calculateModifications (
     { players } : GameState,
-    { posX, posY, uuid } : MouseData,
+    { mousePosition: { x: mouseX, y: mouseY }, uuid } : MouseData,
   ) : ModificationMap<GameState> {
     if (!players[uuid]) {
       return {};
     }
 
-    const { x, y } = players[uuid];
-
-    const diffX = posX - x;
-    const diffY = posY - y;
-    const total = Math.abs(diffX) + Math.abs(diffY);
-
-    if (total === 0) {
-      return {};
-    }
-
-    const percX = diffX / total;
-    const percY = diffY / total;
+    const { x, y } = players[uuid].mousePosition;
 
     return {
-      ['players.' + uuid + '.x']: ['+', percX * SPEED],
-      ['players.' + uuid + '.y']: ['+', percY * SPEED],
+      ['players.' + uuid + '.mousePosition.x']: ['+', mouseX - x],
+      ['players.' + uuid + '.mousePosition.y']: ['+', mouseY - y],
     };
   }
 }
