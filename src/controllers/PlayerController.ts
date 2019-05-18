@@ -7,12 +7,16 @@ import { PlayerBall } from '../view/PlayerBall';
 export class PlayerController extends GameController<GameState> {
 
   public init () : void {
+    this.events.on(PlayerInitEvent).subscribe(event => {
+      this.view.registerViewItem(new PlayerBall({ uuid: event.params.uuid }))
+    });
+
+    const color = randomColor();
+
     this.events.triggerLocalEvent(new PlayerInitEvent( {
       uuid: this.party.uuid,
-      color: randomColor(),
+      color: color instanceof Array ? color[0] : color,
     })).subscribe();
-
-    this.view.registerViewItem(new PlayerBall({ uuid: this.party.uuid }))
   }
 
   public loop (delta : number) : void {
