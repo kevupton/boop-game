@@ -1,16 +1,16 @@
 import { GameEvent, ModificationMap } from '@kevupton/game-engine';
-import { GameData } from '../game';
+import { GameState } from '../game';
 
 interface PlayerData {
   uuid : string;
   color : string;
 }
 
-export class PlayerInitEvent extends GameEvent<GameData, PlayerData> {
+export class PlayerInitEvent extends GameEvent<GameState, PlayerData> {
   protected calculateModifications (
-    state : GameData,
+    state : GameState,
     { uuid, color } : PlayerData,
-  ) : ModificationMap<GameData> {
+  ) : ModificationMap<GameState> {
     return {
       ['players.' + uuid]: ['=', { x: 200, y: 200, color, }],
     };

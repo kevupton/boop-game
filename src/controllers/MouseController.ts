@@ -1,10 +1,10 @@
 import { MousePositionEvent } from '../events/MousePositionEvent';
-import { GameData } from '../game';
+import { GameState } from '../game';
 import { GameController } from '@kevupton/game-engine';
 
 const INTERVAL = 300;
 
-export class MouseController extends GameController<GameData> {
+export class MouseController extends GameController<GameState> {
 
   private currentX? : number;
   private currentY? : number;
@@ -29,7 +29,7 @@ export class MouseController extends GameController<GameData> {
       return;
     }
 
-    this.eventManager.triggerLocalEvent(new MousePositionEvent({
+    this.events.triggerLocalEvent(new MousePositionEvent({
       posX: this.currentX,
       posY: this.currentY,
       uuid: this.party.uuid,

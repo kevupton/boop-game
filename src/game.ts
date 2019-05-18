@@ -4,7 +4,7 @@ import { PlayerController } from './controllers/PlayerController';
 import { MousePositionEvent } from './events/MousePositionEvent';
 import { PlayerInitEvent } from './events/PlayerInitEvent';
 
-export interface GameData {
+export interface GameState {
   canvasWidth : number;
   canvasHeight : number;
   players : {
@@ -16,7 +16,20 @@ export interface GameData {
   }
 }
 
-export default new GameEngine<GameData>({
+export interface ViewState {
+  players : {
+    [key : string] : {
+      x : number;
+      y : number;
+      color : string;
+    }
+  }
+}
+
+export default new GameEngine<GameState, ViewState>({
+  initialViewState: {
+    players: {},
+  },
   socketConfig: {
     host: 'p2p.s1r.io',
     rtcConfig: {
