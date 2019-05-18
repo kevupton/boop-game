@@ -1,5 +1,5 @@
 import { GameEvent, ModificationMap } from '@kevupton/game-engine';
-import { GameData } from '../game';
+import { GameState } from '../game';
 
 interface MouseData {
   posX : number;
@@ -9,11 +9,11 @@ interface MouseData {
 
 const SPEED = 60;
 
-export class MousePositionEvent extends GameEvent<GameData, MouseData> {
+export class MousePositionEvent extends GameEvent<GameState, MouseData> {
   protected calculateModifications (
-    { players } : GameData,
+    { players } : GameState,
     { posX, posY, uuid } : MouseData,
-  ) : ModificationMap<GameData> {
+  ) : ModificationMap<GameState> {
     if (!players[uuid]) {
       return {};
     }
