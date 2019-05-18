@@ -18,7 +18,7 @@ export interface GameData {
 
 export default new GameEngine<GameData>({
   socketConfig: {
-    host: 'ec2-13-236-85-45.ap-southeast-2.compute.amazonaws.com',
+    host: 'p2p.s1r.io',
     rtcConfig: {
       'iceServers': [
         {'urls': 'stun:stun.stunprotocol.org:3478'},
