@@ -1,6 +1,6 @@
 import { GameController, Vector } from '@kevupton/game-engine';
 import { MousePositionEvent } from '../events/MousePositionEvent';
-import { MovementSyncEvent } from '../events/MovementSyncEvent';
+import { MovementUpdateEvent } from '../events/MovementUpdateEvent';
 import { GameState } from '../game';
 
 export class MovementController extends GameController<GameState> {
@@ -24,7 +24,7 @@ export class MovementController extends GameController<GameState> {
   public loop (delta : number) : void {
     this.countdown -= delta;
 
-    this.events.trigger(new MovementSyncEvent({
+    this.events.trigger(new MovementUpdateEvent({
       uuid: this.uuid,
     }));
 

@@ -1,5 +1,5 @@
 import { ViewItem } from '@kevupton/game-engine';
-import { GameState, ViewState } from '../game';
+import { GameState, ViewState, default as gameManager } from '../game';
 
 export interface PlayerBallParams {
   uuid : string;
@@ -42,16 +42,25 @@ export class PlayerBall extends ViewItem<GameState, ViewState, PlayerBallParams,
       prevPercentage = vPlayer.percentage;
     }
 
-    const percentage = Math.min(1, (delta / (200)) + prevPercentage); // todo determine time
+    const percentage = Math.min(1, (delta / (1000 / gameManager.ticksPerSecond)) + prevPercentage);
 
-    return {
-      ...vPlayer,
-      x: player.playerPosition.x + (percentage * player.vector.x),
-      y: player.playerPosition.y + (percentage * player.vector.y),
-      prevPlayerPosition: player.playerPosition,
-      percentage,
-      color: player.color,
-    };
+    const newX = player.playerPosition.x + percentage * player.vector.x;
+    const newY = player.playerPosition.y + percentage * player.vector.y;
+
+    /*
+      Only rerender if they are in a new position
+     */
+    if (!vPlayer || vPlayer.x !== newX || vPlayer.y !== newY) {
+      return {
+        ...vPlayer,
+        x: newX,
+        y: newY,
+        percentage,
+        color: player.color,
+        // this needs to use a different reference so that it does sync updates
+        prevPlayerPosition: { ...player.playerPosition },
+      };
+    }
   }
 
   public getStateScope () : string {
