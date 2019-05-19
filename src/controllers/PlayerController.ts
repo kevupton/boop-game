@@ -10,16 +10,16 @@ export class PlayerController extends GameController<GameState> {
     Object.keys(this.state.players)
       .forEach(uuid => this.createPlayerBall(uuid));
 
-    this.events.on(PlayerInitEvent).subscribe(event => {
+    this.events.on$(PlayerInitEvent).subscribe(event => {
       this.createPlayerBall(event.params.uuid);
     });
 
     const color = randomColor();
 
-    this.events.triggerLocalEvent(new PlayerInitEvent({
+    this.events.trigger(new PlayerInitEvent({
       uuid: this.party.uuid,
       color: color instanceof Array ? color[0] : color,
-    })).subscribe();
+    }));
   }
 
   public loop (delta : number) : void {

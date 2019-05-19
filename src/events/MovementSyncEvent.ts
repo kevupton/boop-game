@@ -1,4 +1,4 @@
-import { GameEvent, ModificationMap, Vector } from '@kevupton/game-engine';
+import { GameEvent, GameEventType, ModificationMap, Vector } from '@kevupton/game-engine';
 import { GameState } from '../game';
 
 interface MovementData {
@@ -7,17 +7,23 @@ interface MovementData {
 
 const SPEED = 50;
 
-export class MovementSyncEvent extends GameEvent<GameState, MovementData> {
+/*
+  Movement sync to be done once every 500 ms.
+  Not as an event.
+ */
+
+export class MovementSyncEvent extends GameEvent<GameState['players']['uuid'], MovementData> {
+  protected readonly type = GameEventType.Local;
+
   protected calculateModifications (
-    { players } : GameState,
-    { uuid } : MovementData,
+    player: GameState['players']['uuid'],
   ) : ModificationMap<GameState> {
-    if (!players[uuid]) {
+    if (!player) {
       return {};
     }
 
-    const { x, y } = players[uuid].playerPosition;
-    const { x : mouseX, y : mouseY } = players[uuid].mousePosition;
+    const { x, y } = player.playerPosition;
+    const { x : mouseX, y : mouseY } = player.mousePosition;
 
     const diffX = mouseX - x;
     const diffY = mouseY - y;
@@ -30,7 +36,7 @@ export class MovementSyncEvent extends GameEvent<GameState, MovementData> {
     const percX = diffX / total;
     const percY = diffY / total;
 
-    const prevVector = players[uuid].vector || {
+    const prevVector = player.vector || {
       x: 0,
       y: 0,
     };
@@ -41,10 +47,14 @@ export class MovementSyncEvent extends GameEvent<GameState, MovementData> {
     };
 
     return {
-      ['players.' + uuid + '.playerPosition.x']: ['+', prevVector.x],
-      ['players.' + uuid + '.playerPosition.y']: ['+', prevVector.y],
-      ['players.' + uuid + '.vector.x']: ['+', vector.x - prevVector.x],
-      ['players.' + uuid + '.vector.y']: ['+', vector.y - prevVector.y],
+      'playerPosition.x': ['+', prevVector.x],
+      'playerPosition.y': ['+', prevVector.y],
+      'vector.x': ['+', vector.x - prevVector.x],
+      'vector.y': ['+', vector.y - prevVector.y],
     };
+  }
+
+  protected getScope (extra = '') : string {
+    return `players.${ this.params.uuid }`;
   }
 }

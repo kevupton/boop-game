@@ -1,4 +1,4 @@
-import { GameEvent, ModificationMap, Vector } from '@kevupton/game-engine';
+import { GameEvent, GameEventType, ModificationMap, Vector } from '@kevupton/game-engine';
 import { GameState } from '../game';
 
 interface MouseData {
@@ -6,20 +6,26 @@ interface MouseData {
   uuid : string;
 }
 
-export class MousePositionEvent extends GameEvent<GameState, MouseData> {
+export class MousePositionEvent extends GameEvent<GameState['players']['uuid'], MouseData> {
+  protected readonly type : GameEventType = GameEventType.Global;
+
   protected calculateModifications (
-    { players } : GameState,
-    { mousePosition: { x: mouseX, y: mouseY }, uuid } : MouseData,
+    player : GameState['players']['uuid'],
+    { mousePosition: { x: mouseX, y: mouseY } } : MouseData,
   ) : ModificationMap<GameState> {
-    if (!players[uuid]) {
+    if (!player) {
       return {};
     }
 
-    const { x, y } = players[uuid].mousePosition;
+    const { x, y } = player.mousePosition;
 
     return {
-      ['players.' + uuid + '.mousePosition.x']: ['+', mouseX - x],
-      ['players.' + uuid + '.mousePosition.y']: ['+', mouseY - y],
+      'mousePosition.x': ['+', mouseX - x],
+      'mousePosition.y': ['+', mouseY - y],
     };
+  }
+
+  protected getScope (extra = '') {
+    return `players.${ this.params.uuid }`;
   }
 }

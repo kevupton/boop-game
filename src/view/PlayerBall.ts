@@ -1,69 +1,64 @@
 import { ViewItem } from '@kevupton/game-engine';
-import { MovementController } from '../controllers/MovementController';
 import { GameState, ViewState } from '../game';
 
 export interface PlayerBallParams {
   uuid : string;
 }
 
-export class PlayerBall extends ViewItem<GameState, ViewState, PlayerBallParams> {
+type ViewStateScope = ViewState['players']['uuid'] | undefined;
+type StateScope = GameState['players']['uuid'] | undefined;
 
-  public init (gameState : GameState, viewState : ViewState) {
+export class PlayerBall extends ViewItem<GameState, ViewState, PlayerBallParams, StateScope, ViewStateScope> {
+
+  public init (gameState : StateScope, viewState : ViewStateScope) {
   }
 
-  public render (state : ViewState, ctx : CanvasRenderingContext2D) : void {
-    const player = state.players[this.params.uuid];
+  public render (player : ViewStateScope, ctx : CanvasRenderingContext2D) : void {
     if (!player) {
       return;
     }
 
-    const x = this.x;
+    const { _ } = this;
 
     ctx.beginPath();
-    ctx.arc(x(player.x), x(player.y), 20, 0, 2 * Math.PI);
+    ctx.arc(_(player.x), _(player.y), 20, 0, 2 * Math.PI);
     ctx.fillStyle = player.color;
     ctx.fill();
   }
 
   public update (
-    { players } : GameState,
-    { players: vPlayers } : ViewState,
+    player : StateScope,
+    vPlayer : ViewStateScope,
     delta : number,
-  ) : Partial<ViewState> | void {
-    const player = players[this.params.uuid];
-
+  ) {
     if (!player || !player.vector) {
       return;
     }
 
-    const vPlayer = vPlayers[this.params.uuid] || { percentage: 0, prevPlayerPosition: {} };
-
     let prevPercentage = 0;
-    if (vPlayer.prevPlayerPosition.x === player.playerPosition.x &&
+    if (vPlayer &&
+      vPlayer.prevPlayerPosition.x === player.playerPosition.x &&
       vPlayer.prevPlayerPosition.y === player.playerPosition.y) {
       prevPercentage = vPlayer.percentage;
     }
 
-    const percentage = Math.min(1, (delta / (200)) + prevPercentage);
-
-    // console.log(JSON.stringify(vPlayer), JSON.stringify(player));
-    // console.log(vPlayer.prevPlayerPosition.x === player.playerPosition.x &&
-    //   vPlayer.prevPlayerPosition.y === player.playerPosition.y);
-    // console.log(prevPercentage, percentage);
+    const percentage = Math.min(1, (delta / (200)) + prevPercentage); // todo determine time
 
     return {
-      players: {
-        ...vPlayers,
-        [this.params.uuid]: {
-          ...vPlayer,
-          x: player.playerPosition.x + (percentage * player.vector.x),
-          y: player.playerPosition.y + (percentage * player.vector.y),
-          prevPlayerPosition: { ...player.playerPosition },
-          percentage,
-          color: player.color,
-        },
-      },
+      ...vPlayer,
+      x: player.playerPosition.x + (percentage * player.vector.x),
+      y: player.playerPosition.y + (percentage * player.vector.y),
+      prevPlayerPosition: player.playerPosition,
+      percentage,
+      color: player.color,
     };
   }
 
+  public getStateScope () : string {
+    return `players.${ this.params.uuid }`;
+  }
+
+  public getViewStateScope () : string {
+    return `players.${ this.params.uuid }`;
+  }
 }
