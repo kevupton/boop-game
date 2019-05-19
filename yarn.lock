@@ -1250,10 +1250,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@kevupton/game-engine@^0.0.1-beta.18":
-  version "0.0.1-beta.18"
-  resolved "https://registry.yarnpkg.com/@kevupton/game-engine/-/game-engine-0.0.1-beta.18.tgz#f485f1f6d3acc47d054a4652453b805e0e069b05"
-  integrity sha512-WH6r5kMCaNSO8uzTEJ7jB/GjQRbUscXOwywWsSXFSMkgD+umeWWWJnLlROVCQRHff+kvWqlDbZ2u9ir9o1OBTA==
+"@kevupton/game-engine@^0.0.1-beta.19":
+  version "0.0.1-beta.19"
+  resolved "https://registry.yarnpkg.com/@kevupton/game-engine/-/game-engine-0.0.1-beta.19.tgz#82dc20ff081e46c8f4601599a404f5013b8a61ef"
+  integrity sha512-rn/40Jjndy8ykKvmNX8V/PEZXbg7P+3niENTzFpH8fBlWzzX5WgkZe5JT2Sl/EpLKnYqulNbRS0WPFEOd5UEeg==
   dependencies:
     uuid "^3.3.2"
     ws "^7.0.0"

@@ -7,7 +7,6 @@ interface MouseData {
 }
 
 export class MousePositionEvent extends GameEvent<GameState['players']['uuid'], MouseData> {
-  protected readonly type : GameEventType = GameEventType.Global;
 
   protected calculateModifications (
     player : GameState['players']['uuid'],

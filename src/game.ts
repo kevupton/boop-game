@@ -2,7 +2,7 @@ import { GameEngine, Vector } from '@kevupton/game-engine';
 import { MovementController } from './controllers/MovementController';
 import { PlayerController } from './controllers/PlayerController';
 import { MousePositionEvent } from './events/MousePositionEvent';
-import { MovementSyncEvent } from './events/MovementSyncEvent';
+import { MovementUpdateEvent } from './events/MovementUpdateEvent';
 import { PlayerInitEvent } from './events/PlayerInitEvent';
 
 export interface GameState {
@@ -34,8 +34,8 @@ export default new GameEngine<GameState, ViewState>({
   initialViewState: {
     players: {},
   },
-  ticksPerSecond: 30,
-  framesPerSecond: 60,
+  ticksPerSecond: 20,
+  framesPerSecond: 40,
   initialState: {
     canvasWidth: 500,
     canvasHeight: 500,
@@ -48,7 +48,7 @@ export default new GameEngine<GameState, ViewState>({
   events: [
     MousePositionEvent,
     PlayerInitEvent,
-    MovementSyncEvent,
+    MovementUpdateEvent,
   ],
   socketConfig: {
     host: 'p2p.s1r.io',
