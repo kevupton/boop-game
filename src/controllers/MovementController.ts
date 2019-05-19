@@ -24,16 +24,15 @@ export class MovementController extends GameController<GameState> {
   public loop (delta : number) : void {
     this.countdown -= delta;
 
+    this.events.trigger(new MovementSyncEvent({
+      uuid: this.uuid,
+    }));
+
     if (this.countdown > 0) {
       return;
     }
 
     this.countdown = MovementController.INTERVAL;
-
-
-    this.events.triggerLocalEvent(new MovementSyncEvent({
-      uuid: this.party.uuid,
-    })).subscribe();
 
     if (!this.current ||
       (this.previous &&
@@ -43,11 +42,10 @@ export class MovementController extends GameController<GameState> {
       return;
     }
 
-
-    this.events.triggerLocalEvent(new MousePositionEvent({
+    this.events.trigger(new MousePositionEvent({
       mousePosition: this.current,
-      uuid: this.party.uuid,
-    })).subscribe();
+      uuid: this.uuid,
+    }));
 
     this.previous = this.current;
   }
