@@ -1,4 +1,4 @@
-import { GameEvent, GameEventType, ModificationMap, Vector } from '@kevupton/game-engine';
+import { GameEvent, ModificationMap, Vector } from '@kevupton/game-engine';
 import { GameState } from '../game';
 
 interface MouseData {
