@@ -34,8 +34,8 @@ export default new GameEngine<GameState, ViewState>({
   initialViewState: {
     players: {},
   },
-  ticksPerSecond: 20,
-  framesPerSecond: 40,
+  ticksPerSecond: 10,
+  framesPerSecond: 60,
   initialState: {
     canvasWidth: 500,
     canvasHeight: 500,
