@@ -3,14 +3,14 @@ import { FC } from 'react';
 import { ReactiveXComponent } from 'reactive-x-component';
 import { map } from 'rxjs/operators';
 import gameEngine from '../../game';
-import './Logger.css';
+import '../object-logger/ObjectLogger.css';
 
 interface LoggerProps {
   channel : string;
   take : number;
 }
 
-const Logger : FC<LoggerProps> = ({ channel, take }) => {
+const ObjectLogger : FC<LoggerProps> = ({ channel, take }) => {
   const history : any[] = [];
 
   return (<div>
@@ -36,4 +36,4 @@ const LogItem = ReactiveXComponent({}, { values: [] })<FC<{ values : any[] }>>((
   </div>);
 });
 
-export default Logger;
+export default ObjectLogger;
