@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { ReactiveXComponent } from 'reactive-x-component';
 import { merge } from 'rxjs/internal/observable/merge';
 import { map, scan } from 'rxjs/operators';
+import { dateFormat } from '../../util/date-format';
 import LoggerContainer from './LoggerContainer';
 import gameEngine from '../../game';
 const logger = gameEngine.logger;
@@ -11,6 +12,7 @@ interface LogType {
   message : string;
   type : 'info' | 'error' | 'warning' | 'debug'
   id : number;
+  date : Date;
 }
 
 interface BasicLoggerProps {
@@ -18,15 +20,19 @@ interface BasicLoggerProps {
 }
 
 const BasicLogger : FC<BasicLoggerProps> = ({ log }) => (<LoggerContainer>
-  { log.map(({ type, message, id }) => (
-    <div key={id} className={type}>[{ type.toUpperCase }] { message }</div>
+  { log.map(({ type, message, id, date }) => (
+    <div key={id} className={type} onClick={() => console.log({ type, message, id, date, })}>
+      <span>{ dateFormat(date) } </span>
+      <span>[{ type.toUpperCase() }]</span>
+      { message }
+    </div>
   )) }
 </LoggerContainer>);
 
 
 let id = 0;
 const toType = (type : LogType['type']) => map<string, LogType>((message) => ({
-  type, message, id: ++id,
+  type, message, id: ++id, date: new Date(),
 }));
 
 
@@ -38,11 +44,11 @@ export default ReactiveXComponent({
     logger.debug$.pipe(toType('debug')),
   ).pipe(
     scan<LogType, LogType[]>(((acc, value) => {
-      acc.push(value);
+      acc.unshift(value);
       if (acc.length > 1000) {
-        acc.shift();
+        acc.pop();
       }
       return acc;
     }), []),
   ),
-})(BasicLogger);
+}, { log: [] })(BasicLogger);

@@ -27,6 +27,18 @@ h6 {
   margin-bottom: 5px;
 }
 
+.top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.top-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .frame-rate {
   position: absolute;
   bottom: 0;
@@ -40,10 +52,7 @@ h6 {
 }
 
 .event-log {
-  position: absolute;
-  bottom: 0;
-  right: 50%;
-  transform: translateX(50%);
+  /*max-width: 200px;*/
 }
 
 @keyframes App-logo-spin {

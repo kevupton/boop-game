@@ -1,13 +1,19 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import { CSSProperties, FC } from 'react';
-import './Logger.css';
+import './Logger.scss';
 
 interface LoggerContainerStyles {
-  style? : CSSProperties
+  style? : CSSProperties,
+  className? : string,
+  maxHeight? : string,
 }
 
-const LoggerContainer : FC<LoggerContainerStyles> = ({ children, style }) => {
-  return (<div className='logger-container' style={ style || {} }>
+const LoggerContainer : FC<LoggerContainerStyles> = ({ children, style = {}, className, maxHeight }) => {
+  return (<div className={ classNames('logger-container', className) } style={ {
+    ...style,
+    maxHeight,
+  } }>
     { children }
   </div>);
 };
