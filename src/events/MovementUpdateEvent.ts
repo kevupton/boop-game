@@ -3,6 +3,7 @@ import { GameState } from '../game';
 
 interface MovementData {
   uuid : string;
+  delta : number;
 }
 
 const SPEED = 200;
@@ -12,20 +13,21 @@ const SPEED = 200;
  Not as an event.
  */
 
-export class MovementUpdateEvent extends GameEvent<GameState['players'], MovementData> {
+export class MovementUpdateEvent extends GameEvent<GameState, MovementData, GameState['players']> {
   public readonly type = GameEventType.Local;
 
   protected calculateModifications (
     players : GameState['players'],
+    { delta } : MovementData,
   ) : ModificationMap<GameState> {
 
     return Object.assign(
       {},
-      ...Object.keys(players).map(id => this.createChanges(players, id)),
+      ...Object.keys(players).map(id => this.createChanges(players, id, delta)),
     );
   }
 
-  private createChanges (players : GameState['players'], uuid : string) {
+  private createChanges (players : GameState['players'], uuid : string, delta : number) {
     const player = players[uuid];
     const { _ } = this;
 
@@ -49,8 +51,8 @@ export class MovementUpdateEvent extends GameEvent<GameState['players'], Movemen
     };
 
     const vector : Vector = {
-      x: percX * _(SPEED),
-      y: percY * _(SPEED),
+      x: percX * _(SPEED, delta),
+      y: percY * _(SPEED, delta),
     };
 
     return {

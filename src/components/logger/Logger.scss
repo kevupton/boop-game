@@ -1,0 +1,58 @@
+.logger-container {
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  text-align: left;
+  font-size: 10px;
+  margin: 5px;
+  max-height: 200px;
+  min-width: 200px;
+  overflow: scroll;
+  cursor: default;
+
+  &.avg-logger {
+    color: white;
+    text-align: right;
+  }
+
+  &.basic-logger {
+    background: #536dec;
+  }
+
+  .info {
+    color: #dfe259;
+  }
+
+  .warning {
+    color: #ffb61d;
+  }
+
+  .error {
+    color: #c82936;
+  }
+
+  .debug {
+    color: #c0c0c0;
+  }
+
+  .event-item {
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  .basic-log-item {
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &.modification-queue-log {
+    max-width: 200px;
+  }
+}

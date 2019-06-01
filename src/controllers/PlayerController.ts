@@ -7,7 +7,6 @@ import { PlayerBall } from '../view/PlayerBall';
 export class PlayerController extends GameController<GameState> {
 
   public init () : void {
-    console.log('initial state', this.state);
     Object.keys(this.state.players)
       .forEach(uuid => this.createPlayerBall(uuid));
 

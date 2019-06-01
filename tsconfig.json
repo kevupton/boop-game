@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.extension.json",
   "compilerOptions": {
     "target": "es5",
     "lib": [
@@ -18,7 +19,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "typeRoots": []
   },
   "include": [
     "src"

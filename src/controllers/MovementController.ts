@@ -5,7 +5,7 @@ import { GameState } from '../game';
 
 export class MovementController extends GameController<GameState> {
 
-  static readonly INTERVAL = 300;
+  static readonly INTERVAL = 100;
 
   private current? : Vector;
   private previous? : Vector;
@@ -26,6 +26,7 @@ export class MovementController extends GameController<GameState> {
 
     this.events.trigger(new MovementUpdateEvent({
       uuid: this.uuid,
+      delta,
     }));
 
     if (this.countdown > 0) {
