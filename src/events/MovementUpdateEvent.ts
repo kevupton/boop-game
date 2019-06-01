@@ -6,7 +6,7 @@ interface MovementData {
   delta : number;
 }
 
-const SPEED = 100;
+const SPEED = 200;
 
 /*
  Movement sync to be done once every 500 ms.

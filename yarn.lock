@@ -1089,10 +1089,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@kevupton/game-engine@^0.0.1-beta.20":
-  version "0.0.1-beta.20"
-  resolved "https://registry.yarnpkg.com/@kevupton/game-engine/-/game-engine-0.0.1-beta.20.tgz#662805a8814b7bb8055066da4b4eeab785b08c63"
-  integrity sha512-we3afB4rSWBW2c6NjQeKYquL+i8uw6F3B0qKpa6panUd2/4qGbTUP+uxob7S+nK+L4HA5WW+BzFw9iTnmvMZPw==
+"@kevupton/game-engine@^0.0.1-beta.23":
+  version "0.0.1-beta.23"
+  resolved "https://registry.yarnpkg.com/@kevupton/game-engine/-/game-engine-0.0.1-beta.23.tgz#54f90c38037ef3f0aacd1ae33a5ad3af5f5102a6"
+  integrity sha512-CKykvGBu4EiUJ35EQiBN2+iSi7+ywnMTx7puoS5XMeLzIBP+pU68b3uU3CYar4E0SOKu8wZXgs7ZtbYPgroaqg==
   dependencies:
     uuid "^3.3.2"
     ws "^7.0.0"
@@ -8387,10 +8387,10 @@ react@^16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
-reactive-x-component@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/reactive-x-component/-/reactive-x-component-0.2.0.tgz#509eef9dd7ed8a23e0f961ad753f928bc490c351"
-  integrity sha512-F/AFCQpZdgZ2GsiNngOjkKwTUN188CHuc3FG/S0seUNV2bHzT4DKccZcFlErUJdKxhHjhixphAsGCUusbKYkAw==
+reactive-x-component@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/reactive-x-component/-/reactive-x-component-0.2.2.tgz#091b2f62e454d7f74e8d12ab8cbffe2a8fadb2fc"
+  integrity sha512-5uTEmMe27T1WkIKBdueIgC35xWAXuyTcLI9Ws6M1n0LZTGkaURtopeuzGfdsHBa4jftC5ZenzLVohb7OisGb9A==
   dependencies:
     chalk "^2.4.2"
 

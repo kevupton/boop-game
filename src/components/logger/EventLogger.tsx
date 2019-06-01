@@ -36,10 +36,10 @@ const EventLogger : FC<LoggerProps> = ({ keep }) => {
   </LoggerContainer>);
 };
 
-const LogItem = ReactiveXComponent()<FC<{ values : EventDetails[] }>>(({ values }) => {
+const LogItem = ReactiveXComponent()<FC<{ values : EventDetails[] }>>(({ values = [] }) => {
   return (<div className='log-item'>
     { values && values.map((data) => (
-      <div key={ data.eventUuid } onMouseDown={ () => console.log(data) }>
+      <div key={ data.eventUuid } onMouseDown={ () => console.log(data) } className='event-item'>
         <span>{ dateFormat(data.date) } </span>
         <span>{ data.event.constructor.name }</span>
       </div>

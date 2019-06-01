@@ -16,19 +16,43 @@
     text-align: right;
   }
 
+  &.basic-logger {
+    background: #536dec;
+  }
+
   .info {
-    color: #fdff88;
+    color: #dfe259;
   }
 
   .warning {
-    color: #ffb877;
+    color: #ffb61d;
   }
 
   .error {
-    color: #ff5b65;
+    color: #c82936;
   }
 
   .debug {
     color: #c0c0c0;
+  }
+
+  .event-item {
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  .basic-log-item {
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &.modification-queue-log {
+    max-width: 200px;
   }
 }

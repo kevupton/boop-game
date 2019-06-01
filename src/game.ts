@@ -6,8 +6,6 @@ import { MovementUpdateEvent } from './events/MovementUpdateEvent';
 import { PlayerInitEvent } from './events/PlayerInitEvent';
 
 export interface GameState {
-  canvasWidth : number;
-  canvasHeight : number;
   players : {
     [key : string] : {
       playerPosition : Vector;
@@ -34,11 +32,9 @@ export default new GameEngine<GameState, ViewState>({
   initialViewState: {
     players: {},
   },
-  ticksPerSecond: 10,
+  ticksPerSecond: 0.5,
   framesPerSecond: 60,
   initialState: {
-    canvasWidth: 500,
-    canvasHeight: 500,
     players: {},
   },
   controllers: [

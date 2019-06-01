@@ -19,11 +19,12 @@ interface BasicLoggerProps {
   log : LogType[];
 }
 
-const BasicLogger : FC<BasicLoggerProps> = ({ log }) => (<LoggerContainer>
+const BasicLogger : FC<BasicLoggerProps> = ({ log }) => (<LoggerContainer className='basic-logger'>
   { log.map(({ type, message, id, date }) => (
-    <div key={id} className={type} onClick={() => console.log({ type, message, id, date, })}>
+    <div key={id} className={type + ' basic-log-item'}
+         onClick={() => console.log({ type, message, id, date, })}>
       <span>{ dateFormat(date) } </span>
-      <span>[{ type.toUpperCase() }]</span>
+      <span>[{ type.toUpperCase() }] </span>
       { message }
     </div>
   )) }
