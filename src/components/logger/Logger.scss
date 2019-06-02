@@ -36,6 +36,10 @@
     color: #c0c0c0;
   }
 
+  .queue-item {
+    color: darkorange;
+  }
+
   .event-item {
     transition: 0.2s ease-in-out;
 
@@ -50,9 +54,5 @@
     &:hover {
       background-color: rgba(0, 0, 0, 0.3);
     }
-  }
-
-  &.modification-queue-log {
-    max-width: 200px;
   }
 }

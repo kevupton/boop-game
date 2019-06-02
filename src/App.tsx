@@ -43,7 +43,9 @@ export default () => {
 
         <h6>Game State:</h6>
         <ItemLogger item={ gameEngine.logger.on$(GameState.STATE_LOG) }/>
+      </div>
 
+      <div className='bottom-center'>
         <h6>Modification Queue</h6>
         <ModificationQueueLogger />
       </div>
