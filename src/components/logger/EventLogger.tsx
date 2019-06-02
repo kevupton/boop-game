@@ -12,7 +12,9 @@ interface LoggerProps {
 }
 
 interface EventLogData {
-  event : GameEvent;
+  event : GameEvent & {
+    name : string;
+  };
   eventUuid : string;
 }
 
@@ -41,7 +43,7 @@ const LogItem = ReactiveXComponent()<FC<{ values : EventDetails[] }>>(({ values 
     { values && values.map((data) => (
       <div key={ data.eventUuid } onMouseDown={ () => console.log(data) } className='event-item'>
         <span>{ dateFormat(data.date) } </span>
-        <span>{ data.event.constructor.name }</span>
+        <span>{ data.event.name }</span>
       </div>
     )) }
   </div>);

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FC } from 'react';
-import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
+import SyntaxHighlighter from 'react-syntax-highlighter';
 import { obsidian as styleColor } from 'react-syntax-highlighter/dist/styles/hljs';
 import { ReactiveXComponent } from 'reactive-x-component';
 import LoggerContainer from './LoggerContainer';
@@ -14,10 +14,7 @@ styleColor.hljs.margin = '-5px';
 
 const ItemLogger : FC<LoggerProps> = ({ item = {} }) => {
   return (<LoggerContainer maxHeight='none'>
-    <SyntaxHighlighter language='javascript' style={ {
-      ...styleColor,
-      background: 'transparent',
-    }}>
+    <SyntaxHighlighter language='javascript' style={ styleColor }>
       { JSON.stringify(item, undefined, 4) }
     </SyntaxHighlighter>
   </LoggerContainer>);

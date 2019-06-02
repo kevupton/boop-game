@@ -7,6 +7,8 @@ interface PlayerData {
 }
 
 export class PlayerInitEvent extends GameEvent<GameState, PlayerData> {
+  readonly name = 'PlayerInitEvent';
+
   protected calculateModifications (
     state : GameState,
     { uuid, color } : PlayerData,

@@ -14,6 +14,8 @@ const SPEED = 200;
  */
 
 export class MovementUpdateEvent extends GameEvent<GameState, MovementData, GameState['players']> {
+  readonly name = 'MovementUpdateEvent';
+
   public readonly type = GameEventType.Local;
 
   protected calculateModifications (
