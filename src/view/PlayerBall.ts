@@ -31,7 +31,7 @@ export class PlayerBall extends ViewItem<GameState, ViewState, PlayerBallParams,
     vPlayer : ViewStateScope,
     delta : number,
   ) {
-    if (!player || !player.vector) {
+    if (!player || !player.speed) {
       return;
     }
 
@@ -44,8 +44,8 @@ export class PlayerBall extends ViewItem<GameState, ViewState, PlayerBallParams,
 
     const percentage = Math.min(1, (delta / (1000 / gameManager.ticksPerSecond)) + prevPercentage);
 
-    const newX = player.playerPosition.x + percentage * player.vector.x;
-    const newY = player.playerPosition.y + percentage * player.vector.y;
+    const newX = player.playerPosition.x + percentage * player.speed.x;
+    const newY = player.playerPosition.y + percentage * player.speed.y;
 
     /*
       Only rerender if they are in a new position

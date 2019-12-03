@@ -10,7 +10,8 @@ export interface GameState {
     [key : string] : {
       playerPosition : Vector;
       mousePosition : Vector;
-      vector : Vector;
+      facingDirection : Vector;
+      speed : Vector;
       color : string;
     }
   }
@@ -32,7 +33,7 @@ export default new GameEngine<GameState, ViewState>({
   initialViewState: {
     players: {},
   },
-  ticksPerSecond: 0.5,
+  ticksPerSecond: 10,
   framesPerSecond: 60,
   initialState: {
     players: {},

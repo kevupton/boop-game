@@ -47,7 +47,7 @@ export class MovementUpdateEvent extends GameEvent<GameState, MovementData, Game
     const percX = diffX / total;
     const percY = diffY / total;
 
-    const prevVector = player.vector || {
+    const prevVector = player.speed || {
       x: 0,
       y: 0,
     };
